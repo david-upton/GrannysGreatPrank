@@ -7,8 +7,8 @@ public class Player2Controller : MonoBehaviour
     public float speed = 5f;
     public float jumpForce = 10f;
     public float dashSpeed = 15f;
-    public float dashCooldown = 1f; // Cooldown between dashes
-    public float dashDuration = 0.2f; // Short burst for dashing
+    public float dashCooldown = 1f; 
+    public float dashDuration = 0.2f; 
     public Transform groundCheck;
     public LayerMask groundLayer;
      public Transform spawnPoint;
@@ -17,7 +17,7 @@ public class Player2Controller : MonoBehaviour
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool facingRight = true;
-    private Collider2D currentStairs; // Reference to stairs
+    private Collider2D currentStairs; 
     private float moveInput;
     private bool isDashing = false;
     private float nextDashTime = 0f;
@@ -37,10 +37,10 @@ public class Player2Controller : MonoBehaviour
 
     void Update()
     {
-        // **Ground Check**
+        
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
 
-        if (!isDashing) // Only allow movement if NOT dashing
+        if (!isDashing) 
         {
             moveInput = 0f;
             if (Input.GetKey(KeyCode.LeftArrow)) moveInput = -1f;
@@ -54,36 +54,36 @@ public class Player2Controller : MonoBehaviour
             movement.x = moveInput;
         }
 
-        // **Jump Logic**
+        
         if (Input.GetKeyDown(KeyCode.UpArrow) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            anim.SetTrigger("Jump"); // Play jump animation
+            anim.SetTrigger("Jump"); 
         }
 
-        // **Drop Through Stairs**
+        
         if (Input.GetKey(KeyCode.DownArrow) && currentStairs != null)
         {
             StartCoroutine(DropThroughStairs());
         }
 
-        // **Dash Logic**
+        
         if (Input.GetKeyDown(KeyCode.RightShift) && Time.time >= nextDashTime)
         {
             StartCoroutine(Dash());
         }
 
-        // **Update Animator Parameters**
-        anim.SetBool("isWalking", movement.x != 0); // Walking is now a bool
-        anim.SetBool("isGrounded", isGrounded); // Grounded state
+        
+        anim.SetBool("isWalking", movement.x != 0); 
+        anim.SetBool("isGrounded", isGrounded); 
         anim.SetBool("isDashing", isDashing);
-        anim.SetBool("isJumping", !isGrounded && rb.velocity.y > 0); // Jumping animation
-        anim.SetBool("isFalling", !isGrounded && rb.velocity.y < 0); // Falling animation
+        anim.SetBool("isJumping", !isGrounded && rb.velocity.y > 0); 
+        anim.SetBool("isFalling", !isGrounded && rb.velocity.y < 0); 
     }
 
     void FixedUpdate()
     {
-        if (!isDashing) // Normal movement when NOT dashing
+        if (!isDashing) 
         {
             rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
         }
@@ -94,16 +94,16 @@ public class Player2Controller : MonoBehaviour
         isDashing = true;
         nextDashTime = Time.time + dashCooldown;
 
-        float originalGravity = rb.gravityScale; // Store current gravity
-        rb.gravityScale = 0f; // Disable gravity for smooth dash
+        float originalGravity = rb.gravityScale; 
+        rb.gravityScale = 0f; 
         float dashDirection = facingRight ? 1f : -1f;
-        rb.velocity = new Vector2(dashDirection * dashSpeed, 0f); // Dash forward
+        rb.velocity = new Vector2(dashDirection * dashSpeed, 0f); 
 
-        anim.SetTrigger("Dash"); // Play dash animation
-        yield return new WaitForSeconds(dashDuration); // Wait for dash time
+        anim.SetTrigger("Dash"); 
+        yield return new WaitForSeconds(dashDuration); 
 
-        rb.velocity = Vector2.zero; // Stop dash
-        rb.gravityScale = originalGravity; // Restore gravity
+        rb.velocity = Vector2.zero; 
+        rb.gravityScale = originalGravity; 
         isDashing = false;
     }
 
@@ -132,12 +132,12 @@ public class Player2Controller : MonoBehaviour
 
         if (other.CompareTag("Danger"))
         {
-            RespawnAllPlayers(); // Respawn both players
+            RespawnAllPlayers(); 
         }
 
         if (other.CompareTag("Checkpoint"))
         {
-            UpdateSpawnPoint(other.transform); // Update spawn point for both players
+            UpdateSpawnPoint(other.transform);
         }
     }
 
@@ -151,7 +151,7 @@ public class Player2Controller : MonoBehaviour
 
         void RespawnAllPlayers()
     {
-        // Find both players and move them to the shared spawn point
+        
         PlayerController[] players1 = FindObjectsOfType<PlayerController>();
         Player2Controller[] players2 = FindObjectsOfType<Player2Controller>();
 
@@ -168,7 +168,7 @@ public class Player2Controller : MonoBehaviour
 
     void UpdateSpawnPoint(Transform newSpawnPoint)
     {
-        sharedSpawnPoint = newSpawnPoint; // Update shared spawn point for both players
+        sharedSpawnPoint = newSpawnPoint; 
         Debug.Log("Checkpoint updated for both players!");
     }
 }
