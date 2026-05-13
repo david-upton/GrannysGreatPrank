@@ -6,14 +6,14 @@ public class Interactions : MonoBehaviour
 
     void Start()
     {
-        npcCanvas.SetActive(false);  // Hide canvas initially
+        npcCanvas.SetActive(false);  
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            npcCanvas.SetActive(true);  // Show UI when player enters
+            npcCanvas.SetActive(true);  
         }
     }
 
@@ -21,7 +21,7 @@ public class Interactions : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            npcCanvas.SetActive(false);  // Hide UI when player leaves
+            npcCanvas.SetActive(false);  
         }
     }
 }
