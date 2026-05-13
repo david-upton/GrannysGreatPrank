@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
             TryBreakTile();
         }
 
-        // **Update Animator Parameters**
+        
         anim.SetBool("isWalking", movement.x != 0);
         anim.SetBool("isGrounded", isGrounded);
         anim.SetBool("isJumping", !isGrounded && rb.velocity.y > 0);
@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
 
     void RespawnAllPlayers()
     {
-        // Find both players and move them to the shared spawn point
+        
         PlayerController[] players1 = FindObjectsOfType<PlayerController>();
         Player2Controller[] players2 = FindObjectsOfType<Player2Controller>();
 
@@ -158,8 +158,7 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator BreakTileWithDelay(Collider2D col)
     {
-    yield return new WaitForSeconds(0.5f); // Adjust time to match animation length
-
+    yield return new WaitForSeconds(0.5f); 
     if (col != null)
     {
         col.enabled = false;
