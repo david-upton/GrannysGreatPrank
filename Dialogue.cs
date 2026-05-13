@@ -9,7 +9,7 @@ public class Dialogue : MonoBehaviour
     public float textSpeed = 0.05f;
 
     private int index = 0;
-    private bool isTyping = false; // Tracks if text is currently being typed
+    private bool isTyping = false; 
 
     void Start()
     {
@@ -23,14 +23,14 @@ public class Dialogue : MonoBehaviour
         {
             if (isTyping)
             {
-                // Skip typing and instantly display full line
+                
                 StopAllCoroutines();
                 textComponent.text = lines[index];
                 isTyping = false;
             }
             else
             {
-                // If the line is fully displayed, move to the next line
+                
                 NextLine();
             }
         }
@@ -65,7 +65,7 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false); // Hide dialogue box when done
+            gameObject.SetActive(false); 
         }
     }
 }
